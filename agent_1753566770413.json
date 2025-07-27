@@ -1,0 +1,75 @@
+{
+  "name": "New Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "github_n8n_de795227b0cb",
+        "responseMode": "responseNode",
+        "httpMethod": "GET"
+      },
+      "id": "webhook-node-2",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "const message = 'Hello from your second AIAV AI agent!';\nreturn [{\n  json: {\n    message: message,\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "function-node-2",
+      "name": "Create Message",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "responseData": "={{ $json }}",
+        "responseCode": 200
+      },
+      "id": "respond-node-2",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Create Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Message": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "name": "Second Template Agent",
+  "id": "2"
+}
